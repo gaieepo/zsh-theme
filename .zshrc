@@ -48,15 +48,24 @@ antigen apply
 
 
 #
-# Final config
+# Environment Variables & Config
 #
 
 # General aliases
 alias ls='ls --color'
 alias ll='ls -al'
 alias clear='echo -ne "\e[0;$[LINES]r"'
-alias explorer='/cygdrive/c/Windows/explorer.exe /e,`cygpath -w $PWD`'
 
-alias cdtellex='pushd C:\\Users\\GauravManek\\Desktop\\Semester\ 5\\Tellex >/dev/null'
+# Default Editor
+export EDITOR='subl -w'll
 
-cd C:\\Users\\GauravManek\\Desktop
+
+# Windows support:
+if [[ `uname` =~ "CYGWIN_NT" ]]
+then
+	alias explorer='/cygdrive/c/Windows/explorer.exe /e,`cygpath -w $PWD`'
+	alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
+
+	# If we are starting in the home directory, start on the desktop instead.
+	[[ $PWD == '/home/manek' ]] && cd C:\\Users\\manek\\Desktop
+fi
