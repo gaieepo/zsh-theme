@@ -20,7 +20,16 @@ color_git_default=$FG[166]
 
 # `Footer` virtual environment information
 PROMPT_FOOTER_STR=${(%):-" %n@%m"}" ──"
-PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} ))::─:)} # \u2500 is used
+
+# Use a function so that it can be called automatically.
+function PROMPT_FOOTER_RECALC () {
+	PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} ))::─:)} # \u2500 is used
+}
+PROMPT_FOOTER_RECALC
+# Also execute it before each cmd is drawn. 
+precmd() { PROMPT_FOOTER_RECALC; }
+#PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} ))::─:)} # \u2500 is used
+
 
 PROMPT='%{$color_subtle%}%{$PROMPT_FOOTER_STR_LEAD%}%{$PROMPT_FOOTER_STR%}%{$reset_color%}
 $FG[032]%2d\
