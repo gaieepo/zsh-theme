@@ -31,21 +31,25 @@ bindkey '\e[F' end-of-line
 
 
 #
-# Antigen install
+# zgen install
 #
-source ~/antigen.zsh
+source "${HOME}/.zgen/zgen.zsh"
 
-antigen use oh-my-zsh
+# if the init scipt doesn't exist
+if ! zgen saved; then
+	echo "Generating new zgen file."
+	
+	# specify plugins here
+	zgen oh-my-zsh
+	zgen load zsh-users/zsh-syntax-highlighting
+	zgen oh-my-zsh plugins/git
+	zgen oh-my-zsh plugins/command-not-found
 
-# Antigen packages
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle git
-antigen bundle command-not-found
+	zgen load gauravmm/zsh-theme themes/gmm-zsh
 
-antigen theme gauravmm/zsh-theme themes/gmm-zsh
-
-antigen apply
-
+	# generate the init script from plugins above
+	zgen save
+fi
 
 #
 # Environment Variables & Config
