@@ -3,12 +3,12 @@
 # Install zsh
 sudo apt-get install zsh git
 chsh -s /bin/zsh
-touch .histfile
-chmod u+rw .histfile
 
 # Install my .zshrc file and antigen
 # Move to the home directory
 cd ~
+touch .histfile
+chmod u+rw .histfile
 RCFILE=".zshrc"
 ZGENREPO="https://github.com/tarjoilija/zgen.git"
 
