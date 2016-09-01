@@ -61,7 +61,7 @@ alias ll='ls -al'
 alias clear='echo -ne "\e[0;$[LINES]r"'
 
 # Default Editor
-export EDITOR='subl -w'll
+export EDITOR='subl -w'
 
 
 # Windows support:
