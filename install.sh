@@ -3,6 +3,7 @@
 RCFILE=".zshrc"
 ZGENREPO="https://github.com/tarjoilija/zgen.git"
 HISTFILE=".histfile"
+ZGUPDATER=".zgen-update-cron.sh"
 
 set -e
 
@@ -31,7 +32,7 @@ if [ -e $RCFILE ]
 then
 	echo "$RCFILE found, skipping..."
 else
-	wget https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zshrc -O $RCFILE
+	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zshrc" -O $RCFILE
 fi
 
 # Install zgen.
@@ -39,7 +40,19 @@ if [ -d $ZGENREPO ]
 then
 	echo "$ZGENREPO found, skipping..."
 else
-	git clone https://github.com/tarjoilija/zgen.git .zgen
+	git clone "https://github.com/tarjoilija/zgen.git" .zgen
+fi
+
+# Install the zgen updater.
+if [ -e $ZGUPDATER ]
+then
+	echo "$ZGUPDATER found, skipping..."
+else
+	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zgen-update-cron.sh" -O $ZGUPDATER
+	# Add cron entry:
+	crontab -l >> /tmp/crontab-edit
+	echo "30 9,12 * * * /usr/bin/zsh ~/.zgen-update-cron.sh > /tmp/zgen.update.log 2>&1" >> /tmp/crontab-edit
+	crontab /tmp/crontab-edit
 fi
 
 echo "Done! Starting zsh..."
