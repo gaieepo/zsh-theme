@@ -61,15 +61,9 @@ alias ll='ls -al'
 alias clear='echo -ne "\e[0;$[LINES]r"'
 
 # Default Editor
-export EDITOR='subl -w'
-
-
-# Windows support:
-if [[ `uname` =~ "CYGWIN_NT" ]]
-then
-	alias explorer='/cygdrive/c/Windows/explorer.exe /e,`cygpath -w $PWD`'
-	alias subl='/cygdrive/c/Program\ Files/Sublime\ Text\ 3/subl.exe'
-
-	# If we are starting in the home directory, start on the desktop instead.
-	[[ $PWD == '/home/manek' ]] && cd C:\\Users\\manek\\Desktop
+command -v subl 1>/dev/null 2>&1
+if [ $? == "0" ]; then
+	export EDITOR='subl -w'
+else
+	export EDITOR='nano'
 fi
