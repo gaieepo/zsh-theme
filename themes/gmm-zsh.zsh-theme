@@ -9,14 +9,18 @@ fi
 local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
 # Colors
-color_subtle=$FG[237]
+
+# Pick the footer color to indicate SSH.
+if [ $SESSION_TYPE == "ssh" ]; then
+	color_footer=$FG[062]
+else
+	color_footer=$FG[237]
+fi
 color_prompt=$FG[105]
 color_git_dirty=$FG[196]
 color_git_default=$FG[166] 
 
-#
 # Left prompt
-#
 
 # `Footer` virtual environment information
 PROMPT_FOOTER_STR=${(%):-" %n@%m"}" ──"
@@ -31,7 +35,7 @@ precmd() { PROMPT_FOOTER_RECALC; }
 #PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} ))::─:)} # \u2500 is used
 
 
-PROMPT='%{$color_subtle%}%{$PROMPT_FOOTER_STR_LEAD%}%{$PROMPT_FOOTER_STR%}%{$reset_color%}
+PROMPT='%{$color_footer%}%{$PROMPT_FOOTER_STR_LEAD%}%{$PROMPT_FOOTER_STR%}%{$reset_color%}
 $FG[032]%2d\
 %{$color_prompt%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
@@ -39,7 +43,6 @@ RPS1='${return_code}'
 
 # Right prompt
 RPROMPT='$(git_prompt_info)'
-
 
 # git settings
 ZSH_THEME_GIT_PROMPT_PREFIX="%{$color_git_default%}["
