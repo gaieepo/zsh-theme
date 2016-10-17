@@ -67,3 +67,14 @@ if [ $? == "0" ]; then
 else
 	export EDITOR='nano'
 fi
+
+# Detect if this is an ssh session
+SESSION_TYPE="local"
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  SESSION_TYPE="ssh"
+else
+  case $(ps -o comm= -p $PPID) in
+    sshd|*/sshd) SESSION_TYPE="ssh";;
+  esac
+fi
+export SESSION_TYPE=$SESSION_TYPE
