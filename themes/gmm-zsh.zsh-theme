@@ -1,6 +1,9 @@
 # gmm-zsh theme
 # Based on `af-magic` and `sunrise`
 
+# We handle virtualenv separately
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 if [ $UID -eq 0 ];
 	then NCOLOR="red";
 	else NCOLOR="green";
@@ -23,20 +26,35 @@ color_git_default=$FG[166]
 
 # Left prompt
 
+# From https://github.com/tonyseek/oh-my-zsh-virtualenv-prompt/blob/master/virtualenv-prompt.plugin.zsh
+export PROMPT_VIRTUALENV_STR=""
+function virtualenv_prompt_info() {
+	export PROMPT_VIRTUALENV_STR=""
+    if [ -n "$VIRTUAL_ENV" ]; then
+        if [ -f "$VIRTUAL_ENV/__name__" ]; then
+            local name=`cat $VIRTUAL_ENV/__name__`
+        elif [ `basename $VIRTUAL_ENV` = "__" ]; then
+            local name=$(basename $(dirname $VIRTUAL_ENV))
+        else
+            local name=$(basename $VIRTUAL_ENV)
+        fi
+        export PROMPT_VIRTUALENV_STR="[$name] "
+    fi
+}
+
 # `Footer` virtual environment information
 PROMPT_FOOTER_STR=${(%):-" %n@%m"}
 
 # Use a function so that it can be called automatically.
 function PROMPT_FOOTER_RECALC () {
-	PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} - 3))::─:)} # \u2500 is used
+	virtualenv_prompt_info
+	PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_VIRTUALENV_STR} - ${#PROMPT_FOOTER_STR} - 3))::─:)} # \u2500 is used
 }
 PROMPT_FOOTER_RECALC
 # Also execute it before each cmd is drawn. 
 precmd() { PROMPT_FOOTER_RECALC; }
-#PROMPT_FOOTER_STR_LEAD=${(r:$(( $COLUMNS - ${#PROMPT_FOOTER_STR} ))::─:)} # \u2500 is used
 
-
-PROMPT='%{$color_footer_line%}%{$PROMPT_FOOTER_STR_LEAD%}%{$color_footer%}%{$PROMPT_FOOTER_STR%}%{$color_footer_line%} ──%{$reset_color%}
+PROMPT='%{$color_footer_line%}%{$PROMPT_FOOTER_STR_LEAD%}%{$color_footer%}%{$PROMPT_VIRTUALENV_STR%}%{$PROMPT_FOOTER_STR%}%{$color_footer_line%} ──%{$reset_color%}
 $FG[032]%2d\
 %{$color_prompt%}%(!.#.»)%{$reset_color%} '
 PROMPT2='%{$fg[red]%}\ %{$reset_color%}'
