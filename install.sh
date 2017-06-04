@@ -44,16 +44,16 @@ else
 fi
 
 # Install the zgen updater.
-if [ -e $ZGUPDATER ]
-then
-	echo "$ZGUPDATER found, skipping..."
-else
-	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zgen-update-cron.sh" -O $ZGUPDATER
-	# Add cron entry:
-	crontab -l >> /tmp/crontab-edit
-	echo "30 9,12 * * * /usr/bin/zsh ~/.zgen-update-cron.sh > /tmp/zgen.update.log 2>&1" >> /tmp/crontab-edit
-	crontab /tmp/crontab-edit
-fi
+#if [ -e $ZGUPDATER ]
+#then
+#	echo "$ZGUPDATER found, skipping..."
+#else
+#	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zgen-update-cron.sh" -O $ZGUPDATER
+#	# Add cron entry:
+#	crontab -l >> /tmp/crontab-edit
+#	echo "30 9,12 * * * /usr/bin/zsh ~/.zgen-update-cron.sh > /tmp/zgen.update.log 2>&1" >> /tmp/crontab-edit
+#	crontab /tmp/crontab-edit
+#fi
 
 echo "Done! Starting zsh..."
 
