@@ -29,7 +29,7 @@ color_git_default=$FG[166]
 # From https://github.com/tonyseek/oh-my-zsh-virtualenv-prompt/blob/master/virtualenv-prompt.plugin.zsh
 export PROMPT_VIRTUALENV_STR=""
 function virtualenv_prompt_info() {
-	export PROMPT_VIRTUALENV_STR=""
+    export PROMPT_VIRTUALENV_STR=""
     if [ -n "$VIRTUAL_ENV" ]; then
         if [ -f "$VIRTUAL_ENV/__name__" ]; then
             local name=`cat $VIRTUAL_ENV/__name__`
@@ -38,7 +38,11 @@ function virtualenv_prompt_info() {
         else
             local name=$(basename $VIRTUAL_ENV)
         fi
-        export PROMPT_VIRTUALENV_STR="[$name] "
+        export PROMPT_VIRTUALENV_STR="[$name]"
+    else
+        if [ -n "${CONDA_DEFAULT_ENV// }" ]; then
+            export PROMPT_VIRTUALENV_STR="{${CONDA_DEFAULT_ENV// }}"
+        fi
     fi
 }
 
