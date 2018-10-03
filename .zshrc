@@ -11,49 +11,35 @@ bindkey -e
 LANG=en_US.UTF-8
 
 #
-# Additional key bindings
-#
-
-# ctrl-left/right
-bindkey "\e[1;5C" forward-word
-bindkey "\e[1;5D" backward-word
-
-# ctrl-backspace/delete
-bindkey "\C-_" backward-kill-word
-bindkey "\e[3;5~" kill-word
-
-# alt-backspace
-bindkey "\e\d" undo
-
-bindkey "\e[3~" delete-char
-bindkey '\e[H' beginning-of-line
-bindkey '\e[F' end-of-line
-
-#
 # Environment Variables & Config
 #
 
 # General aliases
-alias ls='ls --color'
-alias ll='ls -al'
 alias clear='echo -ne "\e[0;$[LINES]r"'
+alias zshconfig="vim ~/.zshrc"
+alias vimconfig="vim ~/.vimrc"
+alias gitconfig="vim ~/.gitconfig"
+alias tmuxconfig="vim ~/.tmux.conf"
+alias vimplugins="vim ~/.vim/plugins.vim"
+alias aconfig="vim ~/.aliases"
+alias emacsconfig="vim ~/.emacs.d/init.el"
 
 # Default Editor
 command -v subl 1>/dev/null 2>&1
 if [ $? == "0" ]; then
 	export EDITOR='subl -w'
 else
-	export EDITOR='nano'
+	export EDITOR='vim'
 fi
 
 # Detect if this is an ssh session
 SESSION_TYPE="local"
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-  SESSION_TYPE="ssh"
+    SESSION_TYPE="ssh"
 else
-  case $(ps -o comm= -p $PPID) in
-    sshd|*/sshd) SESSION_TYPE="ssh";;
-  esac
+    case $(ps -o comm= -p $PPID) in
+        sshd|*/sshd) SESSION_TYPE="ssh";;
+    esac
 fi
 export SESSION_TYPE=$SESSION_TYPE
 
@@ -65,7 +51,7 @@ source "${HOME}/.zgen/zgen.zsh"
 # if the init scipt doesn't exist
 if ! zgen saved; then
 	echo "Generating new zgen file."
-	
+
 	# specify plugins here
 	zgen oh-my-zsh
 	zgen load zsh-users/zsh-syntax-highlighting
@@ -77,3 +63,7 @@ if ! zgen saved; then
 	# generate the init script from plugins above
 	zgen save
 fi
+
+# Includes
+source ~/.profile
+source ~/.aliases

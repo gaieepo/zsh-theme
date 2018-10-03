@@ -1,14 +1,17 @@
 #!/bin/sh
 
 RCFILE=".zshrc"
+VIMRCFILE=".vimrc"
+TMUXCONF=".tmux.conf"
 ZGENREPO="https://github.com/tarjoilija/zgen.git"
 HISTFILE=".histfile"
 ZGUPDATER=".zgen-update-cron.sh"
+ALIASES=".aliases"
 
 set -e
 
 # Install zsh
-sudo apt-get install zsh git
+sudo apt-get install zsh git tmux
 chsh -s /bin/zsh
 
 #
@@ -27,13 +30,42 @@ else
 	chmod u+rw $HISTFILE
 fi
 
+# Place .aliases file if it doesn't already exist.
+if [ -e $ALIASES ]
+then
+	echo "$ALIASES found, skipping..."
+else
+	touch $ALIASES
+	chmod u+rw $HISTFILE
+fi
+
 # Install the RC file.
 if [ -e $RCFILE ]
 then
 	echo "$RCFILE found, skipping..."
 else
-	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zshrc" -O $RCFILE
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.zshrc" -O $RCFILE
 fi
+
+# Install the .vimrc file.
+if [ -e $VIMRCFILE ]
+then
+	echo "$VIMRCFILE found, skipping..."
+else
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.vimrc" -O $RCFILE
+    mkdir .vim
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/plugins.vim" -O .vim/$RCFILE
+fi
+
+# Install the .tmux.conf file.
+if [ -e $TMUXCONF ]
+then
+	echo "$TMUXCONF found, skipping..."
+else
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.tmux.conf" -O $RCFILE
+    tmux source-file $TMUXCONF
+fi
+
 
 # Install zgen.
 if [ -d $ZGENREPO ]
@@ -48,7 +80,7 @@ fi
 #then
 #	echo "$ZGUPDATER found, skipping..."
 #else
-#	wget "https://raw.githubusercontent.com/gauravmm/zsh-theme/master/.zgen-update-cron.sh" -O $ZGUPDATER
+#	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.zgen-update-cron.sh" -O $ZGUPDATER
 #	# Add cron entry:
 #	crontab -l >> /tmp/crontab-edit
 #	echo "30 9,12 * * * /usr/bin/zsh ~/.zgen-update-cron.sh > /tmp/zgen.update.log 2>&1" >> /tmp/crontab-edit

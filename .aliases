@@ -1,0 +1,22 @@
+alias gs="git status"
+alias gt="git tree"
+alias gl="git log"
+alias gc="git commit -m "
+alias gaa="git add ."
+alias nahah="git reset --hard && git clean -df"
+
+alias check='tmux a -t '
+
+alias emacs='/usr/bin/emacs -nw'
+
+alias venva="virtualenv venv -p python"
+alias actify='source venv/bin/activate'
+alias agi='ag --ignore-dir=venv '
+
+alias busy='ps aux --sort -rss | head -n'
+alias imgcnt="find . | grep jpg | wc -l"
+alias lssub='find . -type d -print0 | while read -d "" -r dir; do
+files=("$dir"/*)
+printf "%5d files in directory %s\n" "${#files[@]}" "$dir"
+done'
+alias dus="du -cBM --max-depth=1 2> >(grep -v 'Permission denied') | sort -n"
