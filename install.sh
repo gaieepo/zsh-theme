@@ -7,6 +7,7 @@ ZGENREPO="https://github.com/tarjoilija/zgen.git"
 HISTFILE=".histfile"
 ZGUPDATER=".zgen-update-cron.sh"
 ALIASES=".aliases"
+GITCONF=".gitconfig"
 
 set -e
 
@@ -39,7 +40,7 @@ else
 	chmod u+rw $HISTFILE
 fi
 
-# Install the RC file.
+# Install the .zshrc file.
 if [ -e $RCFILE ]
 then
 	echo "$RCFILE found, skipping..."
@@ -64,6 +65,22 @@ then
 else
 	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.tmux.conf" -O $TMUXCONF
     tmux source-file $TMUXCONF
+fi
+
+# Install the .aliases file.
+if [ -e $ALIASES ]
+then
+	echo "$ALIASES found, skipping..."
+else
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.aliases" -O $ALIASES
+fi
+
+# Install the .gitconfig file.
+if [ -e $GITCONF ]
+then
+	echo "$GITCONF found, skipping..."
+else
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.gitconfig" -O $GITCONF
 fi
 
 
