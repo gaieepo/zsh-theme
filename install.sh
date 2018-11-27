@@ -55,7 +55,11 @@ then
 else
 	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.vimrc" -O $VIMRCFILE
     mkdir .vim
+    mkdir .vim/colors
 	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/plugins.vim" -O .vim/plugins.vim
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/themes/atom-dark-256.vim" -O .vim/colors/atom-dark-256.vim
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    vim +PluginInstall +qall
 fi
 
 # Install the .tmux.conf file.
