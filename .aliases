@@ -4,14 +4,17 @@ alias gl="git log"
 alias gc="git commit -m "
 alias gaa="git add ."
 alias nahah="git reset --hard && git clean -df"
+alias gig="vim .gitignore"
 
 alias check='tmux a -t '
+alias spot='tensorboard --logdir '
 
 alias emacs='/usr/bin/emacs -nw'
 
-alias venva="virtualenv venv -p python"
+alias cvenv="virtualenv venv -p python3"
 alias actify='source venv/bin/activate'
 alias agi='ag --ignore-dir=venv '
+alias treei='tree -I "data|venv|weights|__pycache__"'
 
 alias busy='ps aux --sort -rss | head -n'
 alias imgcnt="find . | grep jpg | wc -l"

@@ -12,7 +12,7 @@ set -e
 
 # Install zsh
 sudo apt-get install zsh git tmux
-chsh -s /bin/zsh
+sudo chsh -s /bin/zsh
 
 #
 # Install my .zshrc file and antigen
@@ -52,9 +52,9 @@ if [ -e $VIMRCFILE ]
 then
 	echo "$VIMRCFILE found, skipping..."
 else
-	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.vimrc" -O $RCFILE
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.vimrc" -O $VIMRCFILE
     mkdir .vim
-	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/plugins.vim" -O .vim/$RCFILE
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/plugins.vim" -O .vim/plugins.vim
 fi
 
 # Install the .tmux.conf file.
@@ -62,7 +62,7 @@ if [ -e $TMUXCONF ]
 then
 	echo "$TMUXCONF found, skipping..."
 else
-	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.tmux.conf" -O $RCFILE
+	wget "https://raw.githubusercontent.com/gaieepo/zsh-theme/master/.tmux.conf" -O $TMUXCONF
     tmux source-file $TMUXCONF
 fi
 

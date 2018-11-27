@@ -1,0 +1,11 @@
+[user]
+	name = gaieepo
+	email = gaieepo@gmail.com
+[alias]
+	tree = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all
+    co = checkout
+    br = branch
+    last = log -1 HEAD
+    unstage = reset HEAD --
+[core]
+	editor = vim
